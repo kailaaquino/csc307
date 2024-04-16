@@ -1,5 +1,6 @@
 // backend.js
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8000;
@@ -68,6 +69,9 @@ const deleteUserById = (id) => {
     }
     return null;
 }
+/* enables all cross origin resource sharing requests */
+app.use(cors());
+
 app.use(express.json());
 
 app.post("/users", (req, res) => {
@@ -80,16 +84,6 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
-// app.get("/users", (req, res) => {
-//     const name = req.query.name;
-//     if (name != undefined) {
-//         let result = findUserByName(name);
-//         result = { users_list: result };
-//         res.send(result);
-//     } else {
-//         res.send(users);
-//     }
-// });
 
 /* Finds user by name and job
 URL :http://localhost:8000/users?name=Charlie&job=Janitor */
@@ -144,4 +138,3 @@ app.listen(port, () => {
         `Example app listening at http://localhost:${port}`
     );
 });
-
