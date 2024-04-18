@@ -56,8 +56,33 @@ const FindUserByNameAndJob = (name,job) => {
 const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id);
 
+const generateId = () => {
+    /* generate a letter*/
+    function randLetter(){
+        const alph = "abcdefghijklmnopqrstuvwxyz";
+        return alph[Math.floor(Math.random() * alph.length)];
+    }
+    /* generate a num from 1-10 */ 
+    function randInt (){
+        return Math.floor(Math.random() * 10);
+    }
+    /* generates 3 random letters and numbers */
+
+    let letters = "";
+    for (let i = 0; i < 3; i++){
+        letters += randLetter();
+    }
+    let nums = "";
+    for (let i = 0; i < 3; i++){
+        nums += randInt();
+    }
+
+    return letters + nums;
+}
 const addUser = (user) => {
-    users["users_list"].push(user);
+    // const newUser = {...user, id: generateId()}
+    const addedUser = {id: generateId(), ...user}
+    users["users_list"].push(addedUser);
     return user;
 };
 
@@ -76,8 +101,15 @@ app.use(express.json());
 
 app.post("/users", (req, res) => {
     const userToAdd = req.body;
-    addUser(userToAdd);
-    res.send();
+    const newUser = addUser(userToAdd);
+    if (newUser){
+        res.status(201).send(); // or .json() 
+    }
+    
+    else{
+    res.status(500).send();
+    } 
+
 });
 
 app.get("/", (req, res) => {
