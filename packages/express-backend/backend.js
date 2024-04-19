@@ -103,7 +103,7 @@ app.post("/users", (req, res) => {
     const userToAdd = req.body;
     const newUser = addUser(userToAdd);
     if (newUser){
-        res.status(201).json(newUser); 
+        res.status(201).send(newUser); 
     }
     
     else{
