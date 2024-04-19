@@ -55,12 +55,36 @@ import Form from "./Form";
 
 
     /* Visual Stuff */ 
+      // function removeOneCharacter(index) {
+      //   const updated = characters.filter((character, i) => {
+      //     return i !== index;
+      //   });
+      //   setCharacters(updated);
+      // }
+
       function removeOneCharacter(index) {
-        const updated = characters.filter((character, i) => {
-          return i !== index;
-        });
-        setCharacters(updated);
-      }
+        const character = characters[index];
+        const id = character.id;
+        const promise = fetch(`http://localhost:8000/users/${id}`, {
+        method: "DELETE",
+      })
+      .then((res) => {
+        if (res.status === 204){
+          const updated = characters.filter((anycharacter, i) =>
+          i !== index);
+          setCharacters(updated);
+          }
+        else if (res.status === 404){
+          throw new Error('User not found.')
+        }
+        else{
+          throw new Error('Failed to delete user. ')
+        }
+        })
+        .catch((error) => {
+          console.log('Error to delete user.', error);
+        })
+    }
 
     //   function updateList(person) { 
     //     postUser(person)
@@ -74,16 +98,21 @@ import Form from "./Form";
           .then((res) => {
             /* check for content created */
             if (res.status === 201){
-              setCharacters([...characters, person]);
+              return res.json();
+              // setCharacters([...characters, person]);
            }
            /* if the result returns other than 201 */
             else {
-             console.log('Failed to add user. Status:' + res.status);
+             console.log('Failed to add user. Status:' , res.status);
            }  
+         })
+          .then((addedUser) => {
+            setCharacters([...characters, addedUser]);
+            console.log('Added user successfully', addedUser);
          })
          /* handler for unexpected errors */
           .catch((error) => {
-            console.log(error);
+            console.log('Error to add user.', error);
           })
     } 
 
