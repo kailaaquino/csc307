@@ -83,11 +83,11 @@ const addUser = (user) => {
     // const newUser = {...user, id: generateId()}
     const addedUser = {id: generateId(), ...user}
     users["users_list"].push(addedUser);
-    return user;
+    return addedUser;
 };
 
 const deleteUserById = (id) => {
-    const index = users.users_list.findIndex((user) => user.id === id);
+    const index = users.users_list.findIndex((user) => user.id == id);
     if (index !== -1){
         const del = users.users_list.splice(index,1)[0];
         return del;
