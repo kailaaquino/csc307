@@ -103,11 +103,11 @@ app.post("/users", (req, res) => {
     const userToAdd = req.body;
     const newUser = addUser(userToAdd);
     if (newUser){
-        res.status(201).send(); // or .json() 
+        res.status(201).json(newUser); 
     }
     
     else{
-    res.status(500).send();
+    res.status(500).send("Failed to create user.");
     } 
 
 });
