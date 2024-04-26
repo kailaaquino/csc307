@@ -40,7 +40,7 @@ function findUserByJob(job) {
   return userModel.find({ job: job });
 }
 
-const deleteUserById = (id) => {
+function deleteUserById(id) {
   const promise = userModel.findByIdAndDelete(id);
   return promise;
   // const index = users.users_list.findIndex((user) => user.id == id);
@@ -57,4 +57,5 @@ export default {
   findUserById,
   findUserByName,
   findUserByJob,
+  deleteUserById,
 };

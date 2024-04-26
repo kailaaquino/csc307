@@ -94,6 +94,8 @@ const port = 8000;
 //     }
 //     return null;
 // }
+
+
 /* enables all cross origin resource sharing requests */
 app.use(cors());
 
@@ -132,7 +134,7 @@ app.get("/users", (req, res) => {
     const name = req.query.name;
     const job = req.query.job;
     userServices.getUsers(name,job).then((result) => {
-        res.send(result)
+        res.send({users_list: result})
     })
 });
     // let result = {users_list: []};
@@ -164,13 +166,14 @@ app.get("/users/:id", (req, res) => {
             res.send(result);
         }
     })
+});
     // let result = findUserById(id);
     // if (result === undefined) {
     //   res.status(404).send("Resource not found.");
     // } else {
     //   res.send(result);
     // }
-  });
+  
 
 app.delete("/users/:id", (req, res) => {
     const id = req.params["id"];
@@ -182,6 +185,7 @@ app.delete("/users/:id", (req, res) => {
             res.status(404).send('Resource not found.');
         }
     })
+});
     // const deleteduser = deleteUserById(id);
     // if (deleteduser){
     //     res.status(204).send();
@@ -189,8 +193,6 @@ app.delete("/users/:id", (req, res) => {
     // else{
     //     res.status(404).send('Resource not found.');
     // }
-
-});
 
 app.listen(port, () => {
     console.log(
