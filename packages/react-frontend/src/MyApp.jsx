@@ -64,7 +64,7 @@ import Form from "./Form";
 
       function removeOneCharacter(index) {
         const character = characters[index];
-        const id = character.id;
+        const id = character._id;
         const promise = fetch(`http://localhost:8000/users/${id}`, {
         method: "DELETE",
       })
